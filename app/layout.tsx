@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Poppins } from 'next/font/google'
 import './globals.css'
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 import AppSidebar from '@/components/AppSidebar'
+import { ThemeProvider } from 'next-themes'
 
 const geistSans = Geist({
    variable: '--font-geist-sans',
@@ -31,12 +32,18 @@ export default function RootLayout({
    children: React.ReactNode
 }>) {
    return (
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning>
          <body className={`${poppins.variable} ${poppins.className} antialiased`}>
-            <SidebarProvider>
-               <AppSidebar />
-               <main>{children}</main>
-            </SidebarProvider>
+            <ThemeProvider
+               attribute="class"
+               defaultTheme="dark"
+               enableSystem
+               disableTransitionOnChange>
+               <SidebarProvider>
+                  <AppSidebar />
+                  <main>{children}</main>
+               </SidebarProvider>
+            </ThemeProvider>
          </body>
       </html>
    )
